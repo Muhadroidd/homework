@@ -9,7 +9,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-@org.springframework.stereotype.Repository("dataRespitory")
+@org.springframework.stereotype.Repository("PersonRepository")
 public class PersonRepository implements DataRepository<Person>{
 
     @Autowired
@@ -17,9 +17,9 @@ public class PersonRepository implements DataRepository<Person>{
 
     @Override
     public void put(Person entity) {
-        Object[] params = new Object[] {entity.getId(), entity.getName()};
-        int[] types = new int[]{Types.INTEGER, Types.VARCHAR};
-        operations.update("insert into person person.id, person.name values (?, ?)", params, types);
+        Object[] params = new Object[] {entity.getName()};
+        int[] types = new int[]{ Types.VARCHAR};
+        operations.update("insert into person (name) values (?)", params, types);
     }
 
     @Override

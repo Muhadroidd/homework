@@ -22,9 +22,9 @@ public class PersonService implements DataService{
 
 
     @Override
-    public boolean put(String name) {
+    public boolean put(Person person) {
         try {
-            dataRepository.put(new Person(name));
+            dataRepository.put(person);
             return true;
         }catch (Exception e){
             LOG.error("ERROR SAVING DATA: " + e.getMessage(), e);

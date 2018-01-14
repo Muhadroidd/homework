@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.DemoApplication;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.cfg.Environment;
@@ -19,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackageClasses = DemoApplication.class)
 public class JpaConfig implements TransactionManagementConfigurer {
 
     @Value("${dataSource.driverClassName}")
@@ -40,8 +41,8 @@ public class JpaConfig implements TransactionManagementConfigurer {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(driver);
         config.setJdbcUrl(url);
-        config.setUsername(username);
-        config.setPassword(password);
+        config.setUsername("root");
+        config.setPassword("root");
         return new HikariDataSource(config);
     }
 
@@ -49,11 +50,11 @@ public class JpaConfig implements TransactionManagementConfigurer {
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(configureDataSource());
-        localContainerEntityManagerFactoryBean.setPackagesToScan("com.example.demo");
+        localContainerEntityManagerFactoryBean.setPackagesToScan("homework.src.main.java.com.example.demo");
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         Properties JPAproperties = new Properties();
-        JPAproperties.put(Environment.DIALECT, dialect);
+        JPAproperties.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
         JPAproperties.put(Environment.HBM2DDL_AUTO, hbm2ddlAuto);
         localContainerEntityManagerFactoryBean.setJpaProperties(JPAproperties);
 
